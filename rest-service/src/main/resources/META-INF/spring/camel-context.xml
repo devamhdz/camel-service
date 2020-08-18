@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:cxf="http://camel.apache.org/schema/cxf"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="        http://www.springframework.org/schema/beans https://www.springframework.org/schema/beans/spring-beans.xsd        http://camel.apache.org/schema/spring https://camel.apache.org/schema/spring/camel-spring.xsd  http://camel.apache.org/schema/cxf http://camel.apache.org/schema/cxf/camel-cxf.xsd">
+    
+    <cxf:rsServer address="http://localhost:9000/api/v1" serviceClass="com.example.service.RestService" id="restService">
+    </cxf:rsServer>
+    
+    <bean class="com.example.service.GetEmployees" id="getEmployees"/>
+    
+    <camelContext id="_camelContext1" xmlns="http://camel.apache.org/schema/spring">
+        <route id="_route1">
+        	<from uri="cxfrs:bean:restService"/>
+        	<process ref="getEmployees"/>
+        </route>
+    </camelContext>
+</beans>
